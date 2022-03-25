@@ -35,15 +35,15 @@ func main() {
 	// 	return "Hello " + params["name"]
 	// })
 
+	m.Post("/login", controllers.Login)
+	m.Get("/logout", controllers.Logout)
+
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowCredentials: true,
 	})
 	handler := corsHandler.Handler(m)
-
-	m.Post("/login", controllers.Login)
-	m.Get("/logout", controllers.Logout)
 
 	http.Handle("/", m)
 	m.RunOnAddr(":8080")
