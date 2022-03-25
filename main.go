@@ -29,13 +29,13 @@ func main() {
 	// 	r.Delete("/:id", controllers.Authenticate(1), controllers.DeleteProduct)
 	// })
 
-	// m.Get("/", func() (int, string) {
-	// 	return 418, "this is handler" // HTTP 418 : "this is handler"
-	// })
+	m.Get("/", func() (int, string) {
+		return 418, "this is handler" // HTTP 418 : "this is handler"
+	})
 
-	// m.Get("/hello/:name", func(params martini.Params) string {
-	// 	return "Hello " + params["name"]
-	// })
+	m.Get("/hello/:name", func(params martini.Params) string {
+		return "Hello " + params["name"]
+	})
 
 	m.Post("/login", controllers.Login)
 	m.Get("/logout", controllers.Logout)
