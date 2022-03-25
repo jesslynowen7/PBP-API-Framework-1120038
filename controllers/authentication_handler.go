@@ -64,9 +64,6 @@ func Authenticate(accessType int) http.HandlerFunc {
 			sendUnAuthorizedResponse(w)
 			return
 		}
-		// else {
-		// 	next.ServeHTTP(w, r)
-		// }
 	})
 }
 
