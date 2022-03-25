@@ -1,10 +1,12 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-martini/martini"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/rs/cors"
 
 	controllers "latihan/controllers"
 )
@@ -33,9 +35,18 @@ func main() {
 	// 	return "Hello " + params["name"]
 	// })
 
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		AllowCredentials: true,
+	})
+	handler := corsHandler.Handler(m)
+
 	m.Post("/login", controllers.Login)
 	m.Get("/logout", controllers.Logout)
 
 	http.Handle("/", m)
 	m.RunOnAddr(":8080")
+
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
