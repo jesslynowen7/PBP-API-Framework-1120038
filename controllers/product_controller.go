@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"latihan/models"
+
 	"github.com/go-martini/martini"
 )
 
@@ -25,8 +27,8 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var product Product
-	var products []Product
+	var product models.Product
+	var products []models.Product
 	for rows.Next() {
 		if err := rows.Scan(&product.ID, &product.Name, &product.Price); err != nil {
 			log.Fatal(err.Error())
@@ -37,7 +39,7 @@ func GetAllProducts(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var response ProductsResponse
+	var response models.ProductsResponse
 	response.Response.Status = 200
 	response.Response.Message = "Success"
 	response.Data = products
@@ -58,7 +60,7 @@ func InsertProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var product Product
+	var product models.Product
 	product.Name = r.Form.Get("name")
 	product.Price, _ = strconv.Atoi(r.Form.Get("price"))
 
@@ -67,7 +69,7 @@ func InsertProduct(w http.ResponseWriter, r *http.Request) {
 		product.Price,
 	)
 
-	var response ProductResponse
+	var response models.ProductResponse
 	if errQuery != nil {
 		SendErrorResponse(400, "Error Query", w)
 		return
@@ -90,7 +92,7 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request, args martini.Params) 
 
 	productId := args["id"]
 
-	var response GeneralResponse
+	var response models.GeneralResponse
 	_, errQuery := db.Exec("DELETE FROM products WHERE id=?",
 		productId,
 	)
@@ -132,7 +134,7 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		id,
 	)
 
-	var response GeneralResponse
+	var response models.GeneralResponse
 	if errQuery != nil {
 		SendErrorResponse(400, "Error Query", w)
 		return
@@ -172,7 +174,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user User
+	var user models.User
 	for rows.Next() {
 		if err := rows.Scan(&user.ID, &user.Name, &user.Age, &user.Address, &user.Email, &user.UserType); err != nil {
 			log.Fatal(err.Error())
@@ -188,7 +190,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	generateToken(w, user.ID, user.Name, user.UserType)
-	var response UserResponse
+	var response models.UserResponse
 	response.Response.Status = 200
 	response.Response.Message = "Login Berhasil, Selamat Datang User"
 	response.Data = user
@@ -200,7 +202,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 func Logout(w http.ResponseWriter, r *http.Request) {
 	resetUserToken(w)
 
-	var response GeneralResponse
+	var response models.GeneralResponse
 	response.Status = 200
 	response.Message = "Logout Success"
 	w.Header().Set("Content-Type", "application/json")
@@ -209,7 +211,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 //send Error Message
 func SendErrorResponse(status int, message string, w http.ResponseWriter) {
-	var response GeneralResponse
+	var response models.GeneralResponse
 	response.Status = status
 	response.Message = message
 	w.Header().Set("Content-Type", "application/json")
@@ -218,7 +220,7 @@ func SendErrorResponse(status int, message string, w http.ResponseWriter) {
 
 //send Error Message
 func sendUnAuthorizedResponse(w http.ResponseWriter) {
-	var response GeneralResponse
+	var response models.GeneralResponse
 	response.Status = 401
 	response.Message = "Unauthorized"
 	w.Header().Set("Content-Type", "application/json")
