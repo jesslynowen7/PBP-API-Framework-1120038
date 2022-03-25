@@ -15,6 +15,8 @@ func main() {
 	m := martini.Classic()
 	// 0 = user biasa, 1 = admin
 
+	// m.Use(render.Renderer("templates"))
+
 	m.Get("/products", controllers.Authenticate(0), controllers.GetAllProducts)
 	m.Post("/products", controllers.Authenticate(1), controllers.InsertProduct)
 	m.Put("/products", controllers.Authenticate(1), controllers.UpdateProduct)
