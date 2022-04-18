@@ -15,7 +15,8 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: Commit Linter
-        uses: wagoid/commitlint-github-action@v2.0.3
+      - name: GolangCI-Linter
+        uses: Mushus/golangci-linter@v1.1.2
+
 
 
