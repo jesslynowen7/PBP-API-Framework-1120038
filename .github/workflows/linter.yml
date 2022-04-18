@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: @dictav/action-reviewdog-golangci-lint
+      - name: Linter
         uses: dictav/action-reviewdog-golangci-lint@dictav/v1.14.1
 
 
