@@ -17,7 +17,7 @@ func main() {
 
 	// m.Use(render.Renderer("templates"))
 
-	m.Get("/products", controllers.Authenticate(0), controllers.GetAllsProducts)
+	m.Get("/products", controllers.Authenticate(0), controllers.GetAllProducts)
 	m.Post("/products", controllers.Authenticate(1), controllers.InsertProduct)
 	m.Put("/products", controllers.Authenticate(1), controllers.UpdateProduct)
 	m.Delete("/products/:id", controllers.Authenticate(1), controllers.DeleteProduct)
