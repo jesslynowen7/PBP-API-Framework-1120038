@@ -15,5 +15,6 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: Super-Linter
-        uses: github/super-linter@v2.1.0
+      - name: Action Lint
+        uses: panda0603/lint-action@1.6.3
+
