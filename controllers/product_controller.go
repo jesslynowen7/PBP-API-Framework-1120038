@@ -226,3 +226,11 @@ func sendUnAuthorizedResponse(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
+
+func SendGeneralResponse(w http.ResponseWriter, s int, m string) {
+	var response models.GeneralResponse
+	response.Status = s
+	response.Message = m
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
