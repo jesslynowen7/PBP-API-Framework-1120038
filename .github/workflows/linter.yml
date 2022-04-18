@@ -21,6 +21,7 @@ jobs:
           version: v1.29
           skip-cache: true
           skip-build-cache: true
+          nolint:errcheck
 
 
 
