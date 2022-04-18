@@ -15,11 +15,6 @@ type Product struct {
 	Price int    `json:"price"`
 }
 
-type UsersssResponse struct {
-	Response GeneralResponse `json:"response"`
-	Data     []User          `json:"data"`
-}
-
 type UserResponse struct {
 	Response GeneralResponse `json:"response"`
 	Data     User            `json:"data"`
